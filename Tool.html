@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consequences</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            max-width: 500px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        select,
+        textarea,
+        button {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #consequenceMessage {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #consequenceMessage:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Choose Consequence</h1>
+        
+        <select id="consequenceType">
+            <option value="WARNING">Warning</option>
+            <option value="KICK">Kick</option>
+            <option value="BAN">Ban</option>
+        </select>
+        
+        <textarea id="reason" placeholder="Enter reason for consequence..."></textarea>
+        
+        <button onclick="generateMessage()">Generate Message</button>
+        
+        <div id="consequenceMessage" onclick="copyMessageToClipboard()"></div>
+    </div>
+
+    <script>
+        function generateMessage() {
+            var consequenceType = document.getElementById("consequenceType").value;
+            var reason = document.getElementById("reason").value;
+
+            var consequenceMessage = document.getElementById("consequenceMessage");
+
+            if (reason.trim() === "") {
+                consequenceMessage.innerHTML = "Please enter a reason for the consequence.";
+                return;
+            }
+
+            switch (consequenceType) {
+                case "WARNING":
+                    consequenceMessage.innerHTML = "You are being warned for " + reason + ". If you have questions, do not hesitate.";
+                    break;
+                case "KICK":
+                    consequenceMessage.innerHTML = "You are now being kicked from the server for " + reason + ". Do NOT join in the next 30 minutes or you will be banned.";
+                    break;
+                case "BAN":
+                    consequenceMessage.innerHTML = "You are now being banned from this server for " + reason + ", you may appeal @ .gg/nys.";
+                    break;
+                default:
+                    consequenceMessage.innerHTML = "Invalid consequence type.";
+                    break;
+            }
+        }
+
+        function copyMessageToClipboard() {
+            var consequenceMessage = document.getElementById("consequenceMessage");
+            var range = document.createRange();
+            range.selectNode(consequenceMessage);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+            window.getSelection().removeAllRanges();
+            alert("Message copied to clipboard!");
+        }
+    </script>
+</body>
+</html>
